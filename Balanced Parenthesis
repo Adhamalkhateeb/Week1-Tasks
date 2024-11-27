@@ -1,0 +1,59 @@
+#include <iostream>
+#include <vector>
+#include <stack>
+#include <string>
+
+using namespace std;
+
+bool ArePaired(char Open,char Closed)
+{
+	if (Open == '(' && Closed == ')')
+		return true;
+	else if (Open == '{' && Closed == '}')
+		return true;
+	else if (Open == '[' && Closed == ']')
+		return true;
+	else
+		return false;
+}
+
+bool AreBalanced(string Exp)
+{
+	stack <char> s;
+	for (size_t i = 0; i < Exp.size(); i++)
+	{
+		if (Exp[i] == '(' || Exp[i] == '{' || Exp[i] == '[')
+		{
+			s.push(Exp[i]);
+		}
+		else if (Exp[i] == ')' || Exp[i] == '}' || Exp[i] == ']')
+		{
+			if (s.empty() || !ArePaired(s.top(), Exp[i]))
+				return false;
+			else
+				s.pop();
+			
+		}
+	}
+		return (s.empty());
+}
+
+
+
+
+int main() {
+	
+	string Expression;
+	cin >> Expression;
+
+	if (AreBalanced(Expression))
+	{
+		cout << "Yes Expression is balanced";
+	}
+	else
+	{
+		cout << "NO Expression isn't balanced";
+	}
+
+	return 0;
+}
