@@ -1,0 +1,135 @@
+#include <iostream>
+#include <vector>
+#include <stack>
+
+using namespace std;
+template <class t> 
+class clsStack
+{
+
+
+	class Node
+	{
+	public:
+
+		t value;
+		Node* Next;
+	};
+
+public:
+	
+	Node* StackTop;
+
+	clsStack()
+	{
+		StackTop = NULL;
+	}
+
+	void Push(t Value)
+	{
+		Node* new_element = new Node();
+		if (new_element == NULL)
+		{
+			cout << "Cannot allocate memory";
+		}
+		else
+		{
+			new_element->value = Value;
+			new_element->Next = StackTop;
+			StackTop = new_element;
+		}
+		
+	}
+
+	bool IsEmpty()
+	{
+		return StackTop == NULL;
+	}
+
+	void Pop()
+	{
+		
+		if (IsEmpty())
+			cout << "stack is empty";
+		else
+		{
+			Node* TempStack = new Node();
+			TempStack = StackTop;
+			StackTop = StackTop->Next;
+			delete TempStack;
+		}
+
+	}
+
+	void Pop(t&Element)
+	{
+		
+		if (IsEmpty())
+		{
+			cout << "stack is empty";
+		}
+		else
+		{
+			Node* TempStack = new Node();
+			Element = StackTop->value;
+			TempStack = StackTop;
+			StackTop = StackTop->Next;
+			delete TempStack;
+		}
+		
+	}
+
+	void GetTop(t&Element)
+	{
+		
+
+		if (IsEmpty())
+		{
+			cout << "stack is empty";
+		}
+		else
+		{
+			Element = StackTop->value;
+			cout << Element << endl;
+			
+		}
+	}
+
+	void print() {
+
+		Node* Current = new Node();
+		Current = StackTop;
+		cout << "[";
+		while(Current != NULL)
+		{
+			cout << Current->value << " ";
+			Current = Current->Next;
+		}
+		cout << "]" << endl;
+	}
+};
+	
+
+
+int main() {
+	
+	
+	clsStack <int> s;
+
+	s.Push(5);
+	s.Push(10);
+	s.Push(15);
+	s.Push(20);
+	s.Push(25);
+	s.Pop();
+	s.Pop();
+	s.Pop();
+	cout << s.IsEmpty() << endl;
+	int Adham;
+    s.GetTop(Adham);
+
+	s.print();
+	
+
+	return 0;
+}
