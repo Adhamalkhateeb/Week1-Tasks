@@ -1,0 +1,155 @@
+#include<iostream>
+#include<stack>
+#include<string>
+#include <cassert>
+
+using namespace std;
+
+template <class T>
+class Queue
+{
+	class Node
+	{
+	public:
+
+		T value;
+		Node* Next;
+	};
+	Node* front;
+	Node* rear;
+	int _Size;
+public:
+
+	Queue()
+	{
+		front = NULL;
+		rear = NULL;
+		_Size = 0;
+	}
+
+	bool IsEmpty()
+	{
+		return (front == NULL);
+	}
+
+	void Enqueue(T value)
+	{
+		Node* new_Node = new Node();
+		new_Node->value = value;
+		new_Node->Next = NULL;
+		if (IsEmpty())
+		{
+			rear = front = new_Node;
+		}
+		else
+		{
+			rear->Next = new_Node;
+			rear = new_Node;
+		}
+		_Size++;
+	}
+
+	void Dequeue()
+	{
+		if (IsEmpty())
+		{
+			cout << "can't dequeue, queue is empty";
+			return;
+		}
+		else
+		{
+			
+			if (front == rear)
+			{
+				front= NULL;
+				rear = NULL;
+			}
+			else
+			{
+				Node* temp = new Node();
+				temp = front;
+				front = front->Next;
+				delete temp;
+			}
+			_Size--;
+		}
+			
+	}
+
+	T GetFront()
+	{
+		if (IsEmpty())
+			return NULL;
+		else
+			return front->value;
+	}
+
+	T GetRear()
+	{
+		if (IsEmpty())
+			return NULL;
+		else
+			return rear->value;
+	}
+
+	void Clear()
+	{
+		Node* Current = new Node();
+		
+		while (front != NULL)
+		{
+			  Current = front;
+			  front = front->Next;
+			  delete Current;
+		}
+		rear = NULL;
+		_Size = 0;
+	}
+
+	void PrintQueue()
+	{
+		Node* Current = new Node();
+		Current = front;
+
+		while (Current != NULL)
+		{
+			cout << Current->value << " ";
+			Current = Current->Next;
+		}
+		cout << endl;
+	}
+
+	int GetSize()
+	{
+		return _Size;
+	}	
+
+};
+
+
+int main()
+{
+	
+	Queue <int> MyQueue;
+
+	MyQueue.Enqueue(10);
+	MyQueue.Enqueue(20);
+	MyQueue.Enqueue(30);
+	MyQueue.Enqueue(40);
+	MyQueue.Enqueue(50);
+
+	MyQueue.PrintQueue();
+	MyQueue.Dequeue();
+	cout << MyQueue.GetRear() << endl;
+	cout << MyQueue.GetFront() << endl;
+	
+	
+	return 0;
+}
+
+
+
+
+
+
+
