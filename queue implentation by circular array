@@ -1,0 +1,135 @@
+#include<iostream>
+#include<stack>
+#include<string>
+#include <cassert>
+
+using namespace std;
+const int Max_Size = 100;
+
+template <class T>
+class arrayQueueType
+{
+	int _rear;
+	int _front;
+	int _count;
+	T arr[Max_Size];
+
+public:
+
+	arrayQueueType()
+	{
+		_front = 0;
+		_rear = Max_Size - 1;
+		_count = 0;
+	}
+
+	bool IsEmpty()
+	{
+		return _count == 0;
+	}
+
+	bool IsFull()
+	{
+		return _count == Max_Size;
+	}
+
+	void enqueue(T value)
+	{
+		if (IsFull())
+		{
+			cout << "Queue is full, Can't enqueue..\n";
+		}
+		else
+		{
+			_rear = (_rear + 1) % Max_Size;
+			arr[_rear] = value;
+			_count++;
+		}
+	}
+
+	void dequeue()
+	{
+		if (IsEmpty())
+		{
+			cout << "Queue is empty, Can't dequeue..\n";
+		}
+		else
+		{
+			_front = (_front + 1) % Max_Size;
+			_count--;
+		}
+	}
+
+	T GetFront()
+	{
+		if (!IsEmpty())
+		return arr[_front];
+	}
+
+	void GetFront(T &value)
+	{
+		if (!IsEmpty())
+			value = arr[_front];
+		
+	}
+
+	T GetRear()
+	{
+		if (!IsEmpty())
+			return (arr[_rear]);
+		
+	}
+
+	void GetRear(T& Rear)
+	{
+		if (IsEmpty())
+		{
+			cout << "Queue is empty, Can't dequeue..\n";
+		}
+		else
+			Rear = arr[_rear];
+	}
+
+	void PrintQueue()
+	{
+		if (IsEmpty())
+		{
+			cout << "Queue is empty, Can't dequeue..\n";
+		}
+		else
+		{
+			for (size_t i = _front; i != (_rear + 1); i = ((i + 1) % Max_Size))
+			{
+				cout << arr[i] << endl;
+			}
+		}
+	}
+
+};
+
+int main()
+{
+	arrayQueueType <int> queue;
+	queue.enqueue(10);
+	queue.enqueue(20);
+	queue.enqueue(30);
+	queue.enqueue(40);
+	queue.enqueue(50);
+	queue.dequeue();
+
+	cout << queue.GetFront() << endl;
+
+	queue.PrintQueue();
+
+
+
+	
+	return 0;
+}
+
+
+
+
+
+
+
