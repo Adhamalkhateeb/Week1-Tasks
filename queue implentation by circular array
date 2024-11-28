@@ -4,7 +4,6 @@
 #include <cassert>
 
 using namespace std;
-const int Max_Size = 100;
 
 template <class T>
 class arrayQueueType
@@ -12,15 +11,21 @@ class arrayQueueType
 	int _rear;
 	int _front;
 	int _count;
-	T arr[Max_Size];
+	int Max_Size;
+	T* arr;
 
 public:
 
-	arrayQueueType()
+	arrayQueueType(int Size)
 	{
+		if (Size <= 0)
+			Size = 100;
+		Max_Size = Size;
 		_front = 0;
 		_rear = Max_Size - 1;
 		_count = 0;
+		
+		arr = new T[Size];
 	}
 
 	bool IsEmpty()
@@ -105,13 +110,42 @@ public:
 		}
 	}
 
+	T queueSearch(T element) {
+		int pos = -1;
+		if (!IsEmpty())
+		{
+			for (int i = _front; i != _rear; i = (i + 1) % Max_Size)
+				if (arr[i] == element)
+				{
+					pos = i;
+					break;
+				}
+			if (pos == -1)
+			{
+				if (arr[_rear] == element)
+					pos = _rear;
+			}
+		}
+		else
+			cout << "Q is empty ! " << endl;
+		return pos;
+	}
+
+
+	~arrayQueueType() {
+		delete[]arr;
+	}
+
 };
 
 int main()
 {
-	arrayQueueType <int> queue;
+	arrayQueueType <int> queue(10);
 	queue.enqueue(10);
 	queue.enqueue(20);
+	queue.enqueue(30);
+	queue.enqueue(40);
+	queue.enqueue(50);
 	queue.enqueue(30);
 	queue.enqueue(40);
 	queue.enqueue(50);
@@ -120,8 +154,7 @@ int main()
 	cout << queue.GetFront() << endl;
 
 	queue.PrintQueue();
-
-
+	cout << queue.queueSearch(30);
 
 	
 	return 0;
